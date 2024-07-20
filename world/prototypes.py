@@ -47,6 +47,9 @@ Possible keywords are:
 See the `spawn` command and `evennia.prototypes.spawner.spawn` for more info.
 
 """
+import sys
+import csv
+from evennia import logger
 
 ## example of module-based prototypes using
 ## the variable name as `prototype_key` and
@@ -89,13 +92,31 @@ See the `spawn` command and `evennia.prototypes.spawner.spawn` for more info.
 # "prototype_parent" : ("GOBLIN_WIZARD", "ARCHWIZARD_MIXIN")
 # }
 
-AXE = {
-        "key": "Axe",
-        "tl": 0,
-        "damage": {"swing", (2,'cut')},
-        "reach": 1,
-        "parry": (0,'U'),
-        "cost": 50,
-        "weight": 4,
-        "st": 11
-}
+with open('world/weapons_tables.csv', newline='', encoding='utf-8-sig') as csvfile:
+   weaponreader = csv.DictReader(csvfile)
+
+   thismodule = sys.modules[__name__]
+   
+   weapon_list=[]
+   for _weapon in weaponreader:
+      weapon_list.append(_weapon['proto_type_key'])
+      weapon_prototype = {
+            "key": _weapon['weapon'],
+            "tl": _weapon['tl'],
+            "damage": _weapon['damage'],
+            "reach": _weapon['reach'],
+            "parry": _weapon['parry'],
+            "cost": _weapon['cost'],
+            "weight": _weapon['weight'],
+            "st": _weapon['st'],
+            "notes": _weapon['notes'],
+            "skill": _weapon['skill'],
+            "default": _weapon['default'],
+            "tags": ["weapon"],
+            "typeclass": "world.combat_base.MeleeWeapon",
+      }
+      
+      setattr(thismodule, _weapon['proto_type_key'], weapon_prototype)
+                  
+   logger.log_info(f"Weapon Prototypes Loaded: {len(weapon_list)}")
+   logger.log_trace(f"Weapon Prototypes Loaded: {weapon_list}")

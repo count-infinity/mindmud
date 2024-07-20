@@ -18,6 +18,8 @@ import ast
 
 from evennia.scripts.scripts import DefaultScript
 
+import world.prototypes
+
 
 class Script(DefaultScript):
     """
@@ -99,14 +101,11 @@ class Script(DefaultScript):
 class WeaponsTable(Script):
     def at_server_start(self):
         self.key='weapons_table'
-        self.desc='List of weapons'
+        self.desc='List of weapons'        
 
         with open('world/weapons_tables.csv', newline='', encoding='utf-8-sig') as csvfile:
             weaponreader = csv.DictReader(csvfile)
-            for idx, row in enumerate(weaponreader):
-                if idx==1:
-                    print(row[5])
-            
+        
 
 class Skill:
     def __init__(self):

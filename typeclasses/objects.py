@@ -24,6 +24,16 @@ class ObjectParent:
 
     """
 
+    def has_skill(self, skill_key):
+        if self.db.skills:
+            #TODO: Make this pythonic
+            for skill in self.db.skills:
+                if skill.key == skill_key:
+                    return True
+        return False
+
+        
+
 
 class Object(ObjectParent, DefaultObject):
     """

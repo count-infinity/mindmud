@@ -3,7 +3,6 @@ from evennia import DefaultScript, create_script
 from typeclasses.objects import Object
 from commands.command import Command
 from .rules import GURPSRuleset
-import prototypes
 
 class CombatFailure(RuntimeError):
     pass
@@ -49,6 +48,15 @@ class GURPSCombatHandler(DefaultScript):
     def queue_action(self, combatant):
         pass
 
+    def resolve_attack(source, target, weapon):
+        GURPSCombatHandler.base_skill(source, weapon)
+
+    def base_skill(source, weapon):
+        if source.has_skill(weapon.attributes.get('skill')):
+            print("Has skill")
+        else:
+            print(f"Does not have skill {weapon.db.skill}")
+
 
 
 class Weapon(Object):   
@@ -57,17 +65,17 @@ class Weapon(Object):
         """The main display"""
         return self.attributes.get("name")
 
+class Skill:
+    def __init__(self):
+        self.key="Default Skill"
+        self.tech_level=0
+        self.controlling_attribute="NA"
+        self.prerequisites=[]
+        self.difficulty="Easy"
+        self.defualts=[]
 
 class MeleeWeapon(Weapon):
-
-    def at_object_creation(self):        
-        self.attributes.add("tl",0)
-        self.attributes.add("damage",{"swing": (0,'cut')})
-        self.attributes.add("reach",1)
-        self.attributes.add("parry",(0,'U'))
-        self.attributes.add("cost",0)
-        self.attributes.add("weight",0)
-        self.attributes.add("st",0)
+    pass
 
 class CmdKill(Command):
     key="kill"
@@ -110,6 +118,6 @@ class CmdKill(Command):
             self.caller.msg(f"You can't see {self.lhs} to attack.")
             return None
         self.caller.msg(f"Combat started.{self.lhs}")
-        GURPSRuleset.success_roll(12)
+        GURPSCombatHandler.resolve_attack(self.caller,target,self.caller.weapon)
         
 
