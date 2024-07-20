@@ -1,0 +1,12 @@
+﻿proto_type_key,skill,default,tl,weapon,damage,reach,parry,cost,weight,st,notes
+Axe,AXE/MACE,"DX-5,Flail-4,Two-Handed Axe/Mace-3",0,Axe,"swing:2;cut",1,"0;U",50,4,11,
+Hatchet,AXE/MACE,"DX-5,Flail-4,Two-Handed Axe/Mace-4",0,Hatchet,"swing:0;cut",1,0,40,2,8,[1]
+Throwing Axe,AXE/MACE,"DX-5,Flail-4,Two-Handed Axe/Mace-5",0,Throwing Axe,"swing:2;cut",1,"0;U",60,4,11,[1]
+Mace,AXE/MACE,"DX-5,Flail-4,Two-Handed Axe/Mace-6",2,Mace,"swing:3;crush",1,"0;U",50,5,12,[1]
+Small Mace,AXE/MACE,"DX-5,Flail-4,Two-Handed Axe/Mace-7",2,Small Mace,"swing:3;crush",1,"0;U",35,3,10,[1]
+Pick,AXE/MACE,"DX-5,Flail-4,Two-Handed Axe/Mace-8",3,Pick,"swing:1;impale",1,"0;U",70,3,10,[2]
+Punch,"BOXING,BRAWLING,KARATE,DX",,-1,Punch,"thrust:-1;crush",C,"0;-",0,0,0,[3]
+Brass Knuckles,"BOXING,BRAWLING,KARATE,DX",,1,Brass Knuckles,"thrust:0;crush",C,"0;-",10,0.25,-,[3]
+Kick,"BRAWLING-2,KARATE-2,DX-2",,-,Kick,"thrust:0;crush","C,1",No,0,0,0,"[3,4]"
+Kick with Boots,"BRAWLING-2,KARATE-2,DX-3",,-,Kick with Boots,"thrust:1;crush","C,1",No,0,0,0,"[3,4]"
+Force Sword,FORCE SWORD,"DX-5,"${SkillManager.skills('sword',-3)}",^,Force Sword,8d(5) burn,"1,2",0,10000,2,3,[7]

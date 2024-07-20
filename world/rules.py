@@ -50,7 +50,8 @@ class EvAdventureRollEngine:
             raise TypeError(f"Invalid die-size used (must be between 1 and {max_diesize} sides)")
 
         # At this point we know we have valid input - roll and add dice together
-        return sum(randint(1, diesize) for _ in range(number))
+        rolls = [randint(1, diesize) for _ in range(number)]
+        return rolls, sum(rolls)
 
 # access rolls e.g. with rules.dice.opposed_saving_throw(...)
 dice = EvAdventureRollEngine()
@@ -91,6 +92,14 @@ class GURPSRuleset:
         if obj.points+point_cost < 0:
             return False,point_cost                        
         return True,point_cost
+    
+    def success_roll(target, die_roll ="3d6"):
+        rolls, total= dice.roll(die_roll)
+        if total < target:
+            print(f"Success roll.  {rolls} - {total} for target {target}")
+            return True
+        else:
+            return False
 
 
 class CharacterModifier:

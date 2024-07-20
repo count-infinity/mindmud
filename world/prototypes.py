@@ -88,3 +88,14 @@ See the `spawn` command and `evennia.prototypes.spawner.spawn` for more info.
 # "key": "goblin archwizard",
 # "prototype_parent" : ("GOBLIN_WIZARD", "ARCHWIZARD_MIXIN")
 # }
+
+AXE = {
+        "key": "Axe",
+        "tl": 0,
+        "damage": {"swing", (2,'cut')},
+        "reach": 1,
+        "parry": (0,'U'),
+        "cost": 50,
+        "weight": 4,
+        "st": 11
+}

@@ -12,6 +12,10 @@ just overloads its hooks to have it perform its function.
 
 """
 
+import csv
+import json
+import ast
+
 from evennia.scripts.scripts import DefaultScript
 
 
@@ -90,3 +94,27 @@ class Script(DefaultScript):
     """
 
     pass
+
+
+class WeaponsTable(Script):
+    def at_server_start(self):
+        self.key='weapons_table'
+        self.desc='List of weapons'
+
+        with open('world/weapons_tables.csv', newline='', encoding='utf-8-sig') as csvfile:
+            weaponreader = csv.DictReader(csvfile)
+            for idx, row in enumerate(weaponreader):
+                if idx==1:
+                    print(row[5])
+            
+
+class Skill:
+    def __init__(self):
+        self.key="Default Skill"
+        self.tech_level=0
+        self.controlling_attribute="NA"
+        self.prerequisites=[]
+        self.difficulty="Easy"
+        self.defualts=[]
+
+        

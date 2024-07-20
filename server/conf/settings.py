@@ -42,6 +42,13 @@ MAX_NR_CHARACTERS=10
 AUTO_PUPPET_ON_LOGIN = False
 AUTO_CREATE_CHARACTER_WITH_ACCOUNT = False
 
+GLOBAL_SCRIPTS = {
+    "weapon_table": {
+        "typeclass": "typeclasses.scripts.WeaponsTable",
+        "desc": "Weapon Table"
+    },
+}
+
 ######################################################################
 # Settings given in secret_settings.py override those in this file.
 ######################################################################

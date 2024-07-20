@@ -28,10 +28,7 @@ Points: {points}
 
 class TemporaryCharacterSheet:
 
-    def _random_ability(self):
-        return min(dice.roll("1d6"), dice.roll("1d6"), dice.roll("1d6"))
-
-    def __init__(self):        
+    def __init__(self): 
 
         # name will likely be modified later
         self.name = "Default Name"

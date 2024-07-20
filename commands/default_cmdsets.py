@@ -16,6 +16,7 @@ own cmdsets by inheriting from them or directly from `evennia.CmdSet`.
 
 from evennia import CmdSet, default_cmds
 from .command import CmdGurpsCharCreate, CmdBlah
+from world.combat_base import CmdKill
 
 from evennia.commands.default.account import CmdCharCreate
 
@@ -36,6 +37,7 @@ class CharacterCmdSet(default_cmds.CharacterCmdSet):
         #
         # any commands you add below will overload the default ones.
         #
+        self.add(CmdKill)
 
 
 class AccountCmdSet(default_cmds.AccountCmdSet):
