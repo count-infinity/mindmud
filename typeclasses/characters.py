@@ -9,8 +9,11 @@ creation commands.
 """
 from evennia.objects.objects import DefaultCharacter
 from evennia.typeclasses.attributes import AttributeProperty
+from evennia.utils.utils import lazy_property
 
 from .objects import ObjectParent
+
+from world.skills import SkillHandler
 
 
 class Character(ObjectParent, DefaultCharacter):
@@ -36,13 +39,29 @@ class Character(ObjectParent, DefaultCharacter):
 
     is_pc=True
 
-    strength = AttributeProperty(1)
-    dexterity = AttributeProperty(1)
-    intelligence = AttributeProperty(1)
-    health = AttributeProperty(1)
+    strength = AttributeProperty(10)
+    dexterity = AttributeProperty(10)
+    intelligence = AttributeProperty(10)
+    health = AttributeProperty(10)
     level = 1
     hp = AttributeProperty(8)
     hp_max = AttributeProperty(8)
     xp = AttributeProperty(0)
     race = AttributeProperty("Default Race")
-    character_class = AttributeProperty("Default Class")    
+    character_class = AttributeProperty("Default Class")
+
+    def get_stat(self, stat):
+        if stat=='DX':
+            return self.db.dexterity
+        elif stat=='ST':
+            return self.db.strength
+        elif stat=='IQ':
+            return self.db.intelligence
+        elif stat=='HT':
+            return self.db.health
+        else:
+            return self.attributes.get(stat)
+
+    @lazy_property
+    def skills(self):
+       return SkillHandler(self)

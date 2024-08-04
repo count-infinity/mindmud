@@ -49,7 +49,10 @@ See the `spawn` command and `evennia.prototypes.spawner.spawn` for more info.
 """
 import sys
 import csv
+import ast
 from evennia import logger
+
+from world.utils import skillService
 
 ## example of module-based prototypes using
 ## the variable name as `prototype_key` and
@@ -91,32 +94,3 @@ from evennia import logger
 # "key": "goblin archwizard",
 # "prototype_parent" : ("GOBLIN_WIZARD", "ARCHWIZARD_MIXIN")
 # }
-
-with open('world/weapons_tables.csv', newline='', encoding='utf-8-sig') as csvfile:
-   weaponreader = csv.DictReader(csvfile)
-
-   thismodule = sys.modules[__name__]
-   
-   weapon_list=[]
-   for _weapon in weaponreader:
-      weapon_list.append(_weapon['proto_type_key'])
-      weapon_prototype = {
-            "key": _weapon['weapon'],
-            "tl": _weapon['tl'],
-            "damage": _weapon['damage'],
-            "reach": _weapon['reach'],
-            "parry": _weapon['parry'],
-            "cost": _weapon['cost'],
-            "weight": _weapon['weight'],
-            "st": _weapon['st'],
-            "notes": _weapon['notes'],
-            "skill": _weapon['skill'],
-            "default": _weapon['default'],
-            "tags": ["weapon"],
-            "typeclass": "world.combat_base.MeleeWeapon",
-      }
-      
-      setattr(thismodule, _weapon['proto_type_key'], weapon_prototype)
-                  
-   logger.log_info(f"Weapon Prototypes Loaded: {len(weapon_list)}")
-   logger.log_trace(f"Weapon Prototypes Loaded: {weapon_list}")

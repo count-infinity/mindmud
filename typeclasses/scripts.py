@@ -17,9 +17,7 @@ import json
 import ast
 
 from evennia.scripts.scripts import DefaultScript
-
-import world.prototypes
-
+from world.skills import skillService
 
 class Script(DefaultScript):
     """
@@ -98,22 +96,8 @@ class Script(DefaultScript):
     pass
 
 
-class WeaponsTable(Script):
-    def at_server_start(self):
-        self.key='weapons_table'
-        self.desc='List of weapons'        
-
-        with open('world/weapons_tables.csv', newline='', encoding='utf-8-sig') as csvfile:
-            weaponreader = csv.DictReader(csvfile)
-        
-
-class Skill:
-    def __init__(self):
-        self.key="Default Skill"
-        self.tech_level=0
-        self.controlling_attribute="NA"
-        self.prerequisites=[]
-        self.difficulty="Easy"
-        self.defualts=[]
-
-        
+class LoadSkills(Script):
+  def at_server_reload(self):
+     self.key="load_skills"
+     skillService.load_all_skills()
+     

@@ -1,0 +1,6 @@
+key,controlling_attribute,prerequisites,difficulty,defaults,tags
+Axe/Mace,DX,None,Average,"Flail;-4,DX;-5,Two-Handed Axe/Mace;-3","melee weapon,impact weapon"
+Flail,DX,None,Hard,"Axe/Mace;-4,Two-Handed Flail;-3,DX;-6","melee weapon,flail"
+Two-Handed Flail,DX,None,Hard,"DX;-6,Flail;-3,Kusari;-4","melee weapon,flail"
+Kusari,DX,None,Hard,"Two-Handed Flail;-4","melee weapon,whip"
+Two-Handed Axe/Mace,DX,None,Average,"DX;-5,Axe/Mace;-3,Two-Handed Flail;-4","melee weapon,impact weapon"

@@ -2,7 +2,8 @@ from evennia import DefaultScript, create_script
 
 from typeclasses.objects import Object
 from commands.command import Command
-from .rules import GURPSRuleset
+from .rules import GURPSRuleset, dice
+from world.skills import skillService
 
 class CombatFailure(RuntimeError):
     pass
@@ -52,27 +53,34 @@ class GURPSCombatHandler(DefaultScript):
         GURPSCombatHandler.base_skill(source, weapon)
 
     def base_skill(source, weapon):
-        if source.has_skill(weapon.attributes.get('skill')):
-            print("Has skill")
+
+        weapon_skill = weapon.attributes.get('skill')
+        if skill_to_use := source.skills.get(weapon_skill):
+            skill_to_use = source.skills.adjusted_skills([(skill_to_use.skill_key,0)])[0]
         else:
-            print(f"Does not have skill {weapon.db.skill}")
+            skill_to_use = GURPSCombatHandler.select_max_skill(source, weapon.db.default)  
 
+        source.msg(f"Skill to use {skill_to_use}")      
 
+        dice_roll, total=dice.roll("3d6")
+        hit = True if total<=skill_to_use[1] else False
+        
+        source.msg(f"Attack with {weapon.db.weapon} using skill {skill_to_use[0]}, rolled {dice_roll} for {total}.  Hits: {hit}")
+
+    def select_max_skill(source, skill_list):
+        print(f"Default skill list {skill_list}")
+
+        potential_skills=source.skills.skills_from(skill_list)
+        adj_skills = source.skills.adjusted_skills(potential_skills)
+        max_skill = max(adj_skills, key=lambda x: x[1])
+
+        return max_skill
 
 class Weapon(Object):   
         
     def get_display_desc(self, looker, **kwargs):
         """The main display"""
         return self.attributes.get("name")
-
-class Skill:
-    def __init__(self):
-        self.key="Default Skill"
-        self.tech_level=0
-        self.controlling_attribute="NA"
-        self.prerequisites=[]
-        self.difficulty="Easy"
-        self.defualts=[]
 
 class MeleeWeapon(Weapon):
     pass
@@ -118,6 +126,6 @@ class CmdKill(Command):
             self.caller.msg(f"You can't see {self.lhs} to attack.")
             return None
         self.caller.msg(f"Combat started.{self.lhs}")
-        GURPSCombatHandler.resolve_attack(self.caller,target,self.caller.weapon)
+        GURPSCombatHandler.resolve_attack(self.caller,target,self.caller.db.weapon)
         
 
