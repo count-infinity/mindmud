@@ -50,6 +50,8 @@ class GURPSCombatHandler(DefaultScript):
         pass
 
     def resolve_attack(source, target, weapon):
+
+        message = {"type": "attack", "source": source, "target": target, "weapon": weapon}
         GURPSCombatHandler.base_skill(source, weapon)
 
     def base_skill(source, weapon):
@@ -75,6 +77,7 @@ class GURPSCombatHandler(DefaultScript):
         max_skill = max(adj_skills, key=lambda x: x[1])
 
         return max_skill
+    
 
 class Weapon(Object):   
         
