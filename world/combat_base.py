@@ -79,11 +79,8 @@ class GURPSCombatHandler(DefaultScript):
         return max_skill
     
 
-class Weapon(Object):   
-        
-    def get_display_desc(self, looker, **kwargs):
-        """The main display"""
-        return self.attributes.get("name")
+class Weapon(Object):       
+    pass
 
 class MeleeWeapon(Weapon):
     pass

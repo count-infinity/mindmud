@@ -207,3 +207,19 @@ class CmdGurpsCharCreate(CmdCharCreate):
 #                 self.character = self.caller.get_puppet(self.session)
 #             else:
 #                 self.character = None
+
+import debugpy
+
+class CmdDebug(Command):
+    key = "debug"
+    locks = "cmd:perm(create) or perm(Builder)"
+    arg_regex = r"\s|$"
+    help_category = "Admin"
+
+    def func(self):
+        caller = self.caller
+        print("Waiting for debugger attach")
+        debugpy.listen(('localhost', 5678))
+        debugpy.wait_for_client()
+        caller.msg("Debugger attached")
+        print("Debugger attached")
